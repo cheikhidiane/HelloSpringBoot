@@ -1,6 +1,8 @@
 package sn.edu.ept.git.dic2.HelloSpringBoot.controllers;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sn.edu.ept.git.dic2.HelloSpringBoot.entities.Employe;
 import sn.edu.ept.git.dic2.HelloSpringBoot.services.EmployeService;
@@ -34,8 +36,14 @@ public class EmployeController {
     }
 
     @PutMapping
-    public Employe save(@RequestBody Employe employe){
-        return employeService.save(employe);
+    public ResponseEntity<Employe> save(@RequestBody Employe employe){
+        if (employe.getNom() == null || employe.getNom().isBlank()){
+            return ResponseEntity.status(451).build();
+        }
+        Employe result = employeService.save(employe);
+
+        return ResponseEntity.status(201)
+                .body(result);
     }
 
     @PutMapping("/{id}")

@@ -75,7 +75,7 @@ public class GestionEmployeTests {
         MvcResult result = mockMvc.perform(put(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(data))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         Employe employee = objectMapper.readValue(
